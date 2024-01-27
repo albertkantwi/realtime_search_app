@@ -1,0 +1,21 @@
+<%= form_tag(search_path, method: "post", remote: true) do %>
+    <%= text_field_tag :query, params[:query], placeholder: "Search articles..." %>
+    <%= submit_tag "Search" %>
+  <% end %>
+  
+  <div id="search_logs">
+    <%= render partial: 'search_log', collection: @search_logs %>
+  </div>
+  
+  <script>
+    document.addEventListener("turbolinks:load", function() {
+      App.search = App.cable.subscriptions.create("SearchChannel", {
+        connected: function() {},
+        disconnected: function() {},
+        received: function(data) {
+          $('#search_logs').prepend(data.html);
+        }
+      });
+    });
+  </script>
+  
