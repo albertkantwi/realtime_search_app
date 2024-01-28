@@ -1,3 +1,3 @@
 class User < ApplicationRecord
-    has_many :search_logs
+  has_many :search_logs
 end
